@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-container">
+  <h1>Welcome, {{ user.username }}!</h1>
+  
+  <div class="metrics-container">
+    <h2>Your Twitter Metrics</h2>
+    {% if engagements %}
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <h3>Total Views</h3>
+          <p>{{ engagements[0].views }}</p>
+        </div>
+        <div class="metric-card">
+          <h3>Total Likes</h3>
+          <p>{{ engagements[0].likes }}</p>
+        </div>
+        <div class="metric-card">
+          <h3>Total Retweets</h3>
+          <p>{{ engagements[0].retweets }}</p>
+        </div>
+      </div>
+    {% else %}
+      <p>No metrics data available yet</p>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

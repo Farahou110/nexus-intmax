@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="auth-container">
+<div class="auth-card">
+<div class="auth-header text-center">
+  <h2>Create an account</h2>
+  <p>Join the fellow program</p>
+</div>
+
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    {% for category, message in messages %}
+      <div class="flash-message {{ 'success' if category == 'success' else 'error' }}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+{% endwith %}
+
+<form class="auth-form" action="/reg" method="POST">
+    <Label for="Email">Email</Label>
+    <input type="text" id="Email" name="Email" required>
+      <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" id="password" name="password" required>
+  </div>
+  <div class="form-group">
+    <label for="role">Role</label>
+    <select id="role" name="role" required>
+      <option value="">Select Role</option>
+      <option value="admin">Admin</option>
+      <option value="fellow">Fellow</option>
+    </select>
+  </div>
+  <button type="submit" class="btn btn-primary w-full">Create Account</button>
+</form>
+
+<div class="text-center mt-4">
+  <a href="/login">Already have an account? Sign in</a>
+</div>
+</div>
+</div>
+{% endblock %}

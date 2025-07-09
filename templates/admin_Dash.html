@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="dashboard-layout">
+  <!-- Sidebar (same as fellow dashboard) -->
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="flex justify-between items-center mb-6">
+      <h1>Admin Dashboard</h1>
+      <button onclick="showModal('addFellowModal')" class="btn btn-primary">
+        <i class="fas fa-plus"></i> Add Fellow
+      </button>
+    </div>
+
+    <!-- Admin Stats Cards -->
+    <div class="stats-grid">
+      <!-- Similar to fellow dashboard but with admin metrics -->
+    </div>
+
+    <!-- Fellows Table -->
+    <div class="data-table">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Fellow</th>
+            <th>Twitter</th>
+            <th>Week 1</th>
+            <th>Week 2</th>
+            <th>Total</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for fellow in fellows %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td>{{ fellow.username }}</td>
+            <td>@{{ fellow.twitter }}</td>
+            <td>{{ fellow.week1_views }}</td>
+            <td>{{ fellow.week2_views }}</td>
+            <td>{{ fellow.total_views }}</td>
+            <td>
+              <button onclick="editFellow('{{ fellow.id }}')" class="btn-icon">
+                <i class="fas fa-edit"></i>
+              </button>
+              <form action="/admin/delete/{{ fellow.id }}" method="POST">
+                <button type="submit" class="btn-icon text-danger">
+                  <i class="fas fa-trash"></i>
+                </button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Add Fellow Modal -->
+<div id="addFellowModal" class="modal-overlay hidden">
+  <div class="modal-content">
+    <h2>Add New Fellow</h2>
+    <form action="/admin/add_fellow" method="POST">
+      <!-- Form fields -->
+      <div class="flex justify-end gap-2 mt-4">
+        <button type="button" onclick="hideModal()" class="btn">Cancel</button>
+        <button type="submit" class="btn btn-primary">Add Fellow</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  function showModal(id) {
+    document.getElementById(id).classList.remove('hidden');
+  }
+  
+  function hideModal() {
+    document.querySelectorAll('.modal-overlay').forEach(el => {
+      el.classList.add('hidden');
+    });
+  }
+</script>
+{% endblock %}
